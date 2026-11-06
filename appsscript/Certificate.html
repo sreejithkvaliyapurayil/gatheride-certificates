@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GATHERIDE | Certificate Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#10283f;--navy2:#071b2c;--gold:#c6a361;--muted:#657485;--paper:#f6f3ed;--teal:#217e79;--err:#b34646;--line:#e2e5e8;--shadow:0 22px 70px #001a3031}
+*{box-sizing:border-box}body{margin:0;font-family:'DM Sans',system-ui,sans-serif;color:#142638;background:#f2f5f6}button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.shell{max-width:1510px;margin:auto;padding:0 30px 36px}.top{background:#0a2032;color:#fff}.top-inner{max-width:1510px;padding:20px 30px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:13px}.monogram{width:46px;height:46px;border:1px solid #c4a06790;display:grid;place-items:center;color:#dfc58d;font:700 27px 'Libre Baskerville',serif}.brand strong{font:700 19px 'Libre Baskerville',serif;letter-spacing:.045em}.brand small{display:block;font-size:10px;letter-spacing:.2em;color:#a4b5c4;margin-top:6px}.top-meta{display:flex;gap:20px;align-items:center;color:#c6d4dc;font-size:11px;letter-spacing:.08em}.top-meta i{width:7px;height:7px;border-radius:50%;background:#5ed1b8;display:inline-block;vertical-align:middle;margin-right:6px}.top-meta .label{padding:9px 12px;border:1px solid #ffffff2e;border-radius:30px}
+.crumb{padding:32px 0 23px;display:flex;justify-content:space-between;align-items:center;gap:12px}.eyebrow{font-size:10px;font-weight:800;letter-spacing:.21em;text-transform:uppercase;color:#7e8d9a}.crumb h1{margin:9px 0 0;font:700 clamp(24px,3vw,39px) 'Libre Baskerville',serif;letter-spacing:-.03em;color:var(--navy)}.crumb p{font-size:13px;color:#687989;margin:7px 0 0}.side-note{font-size:11px;color:#87929c;text-align:right;max-width:230px;line-height:1.6}
+.work{display:grid;grid-template-columns:minmax(330px,450px) minmax(0,1fr);gap:26px;align-items:start}.card{border:1px solid #e2e7e9;background:#fff;border-radius:18px;box-shadow:0 12px 38px #0a2a3c0a}.controls{padding:27px 28px 24px;position:sticky;top:18px}.section-tag{font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}.controls h2{font-size:21px;margin:9px 0 7px;color:#172f42}.controls>p{color:var(--muted);font-size:12px;line-height:1.75;margin:0 0 22px}.portfolio-panel{background:linear-gradient(115deg,#0e2b42,#14384a);color:#fff;padding:17px 18px;border-radius:11px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}.portfolio-panel span{display:block;letter-spacing:.13em;font-size:9px;color:#bdcdd5}.portfolio-panel strong{font:700 29px 'Libre Baskerville',serif;letter-spacing:.02em}.portfolio-panel small{font-size:10px;color:#a2cac6}.field{margin-bottom:17px}.field label{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:12px;margin-bottom:8px;color:#263c4b}.field label span{font-weight:500;color:#8995a0}.field input{display:block;width:100%;height:47px;padding:0 13px;border-radius:8px;border:1px solid #d9e0e5;background:#fbfcfc;color:#173044;transition:.2s}.field input:focus{border-color:#3a9a96;outline:none;box-shadow:0 0 0 3px #31a69a23}.field .hint{display:block;margin-top:6px;color:#81909c;font-size:10px;line-height:1.6}.check{font-size:11px;margin-top:7px;min-height:15px;color:#577e79}.check.bad{color:var(--err)}.check.good{color:#188478}.actions{display:grid;gap:10px;margin-top:22px}.main-btn,.outline-btn{width:100%;min-height:49px;border-radius:8px;font-size:12px;letter-spacing:.025em;font-weight:800}.main-btn{background:#0c344b;border:1px solid #0c344b;color:white}.main-btn:hover:not(:disabled){background:#16516a}.outline-btn{border:1px solid #cad5da;background:#fff;color:#1e4054}.outline-btn:hover:not(:disabled){background:#f5faf9}button:disabled{cursor:not-allowed;opacity:.5}.alert{margin-top:17px;border-radius:8px;padding:11px 13px;background:#fff3f1;color:#993b33;border:1px solid #eec7c1;font-size:11px;line-height:1.6;white-space:pre-wrap}.alert.success{color:#14665d;background:#e8f7f3;border-color:#b6e0d6}.audit-note{font-size:10px;color:#8a979e;line-height:1.75;border-top:1px solid #edf0f1;margin-top:22px;padding-top:15px}
+.viewer{padding:20px;background:#e8ecee}.viewer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.viewer-head h2{font-size:13px;margin:0;color:#244056}.viewer-head span{font-size:11px;color:#718693}.viewer-head button{padding:10px 14px;font-size:11px;border:1px solid #cedadf;border-radius:8px;color:#183c50;background:white;font-weight:700}.print-fit{width:min(100%,760px);margin:0 auto}.certificate{background:#fff;width:100%;aspect-ratio:210/297;position:relative;box-shadow:var(--shadow);padding:5.2% 5.4%;color:#14253b;border:9px solid var(--navy);font-family:'Libre Baskerville',Georgia,serif;overflow:hidden}.certificate:before{content:'';position:absolute;inset:10px;border:1.5px solid var(--gold);pointer-events:none}.certificate:after{content:'';position:absolute;inset:18px;border:1px solid #d9c99f70;pointer-events:none}.doc-inner{height:100%;position:relative;z-index:1;display:flex;flex-direction:column}.doc-mark{font:700 clamp(23px,3.5vw,47px)/1 'Libre Baskerville',serif;color:var(--navy);border:2px solid var(--gold);display:grid;place-items:center;width:63px;height:63px;margin:0 auto 9px}.doc-head{text-align:center}.doc-head h2{font-size:clamp(14px,2.18vw,26px);letter-spacing:.01em;line-height:1.2;margin:8px 0;color:var(--navy)}.doc-head p{font-family:'DM Sans',sans-serif;font-size:clamp(8px,1vw,11px);line-height:1.5;margin:4px 0;color:#36495a}.doc-head .llpin{font-weight:800;letter-spacing:.1em;color:#aa814a}.doc-divider{height:1px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold) 80%,transparent);margin:14px 0}.doc-title{text-align:center;background:#10283f;color:#fff;border:2px solid #c7a765;padding:15px 8px 13px;margin:12px 0 18px;line-height:1.3;font-weight:700;letter-spacing:.07em;font-size:clamp(12px,1.85vw,24px)}.doc-title strong{color:#e2c789}.doc-meta{display:flex;justify-content:space-between;gap:15px;line-height:1.55;font-size:clamp(9px,.96vw,12px);margin-bottom:16px}.doc-meta span{font-weight:700;color:#bd985c}.doc-body{text-align:justify;font-size:clamp(9px,1.03vw,13px);line-height:1.68;margin:0 0 13px;color:#273648}.doc-detail{border-collapse:collapse;width:100%;margin:12px 0 17px;font-size:clamp(9px,1vw,13px);line-height:1.45}.doc-detail td{border:1px solid #cdbb9b;padding:8px 10px}.doc-detail td:first-child{width:33%;background:#f5f0e7;font-weight:700;color:#112f46}.doc-detail .amount{font-weight:700;color:#9a6d2d}.doc-sign{display:flex;justify-content:space-between;align-items:flex-end;gap:22px;margin-top:auto;padding-bottom:12px}.doc-sign .sign-col{width:59%;line-height:1.4;font-size:clamp(9px,1vw,13px)}.doc-sign .line{height:34px;border-bottom:1px solid #24374a;width:90%;margin-bottom:7px}.doc-sign strong{color:#122a42}.doc-sign p{margin:4px 0}.doc-seal{text-align:center;border:1px dashed #c3a976;border-radius:50%;width:105px;height:105px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:7px;color:#aa8d5d;opacity:.65}.doc-seal strong{font-family:'Libre Baskerville',serif;font-size:27px}.doc-seal span{font:700 8px 'DM Sans',sans-serif;letter-spacing:.13em}.doc-foot{text-align:center;font:500 8px/1.5 'DM Sans',sans-serif;letter-spacing:.02em;color:#7c8b93;border-top:1px solid #ddceb0;padding-top:10px}.preview-watermark{position:absolute;inset:42% auto auto 12%;z-index:3;transform:rotate(-24deg);font:800 clamp(30px,5vw,70px) 'DM Sans',sans-serif;letter-spacing:.07em;color:#ba6e6c4d;pointer-events:none}.status-badge{color:#a77743;font-size:9px;letter-spacing:.18em;font-weight:700}
+@media(max-width:1100px){.work{grid-template-columns:1fr}.controls{position:static}.print-fit{max-width:660px}.doc-head h2{font-size:23px}.doc-title{font-size:19px}.doc-body{font-size:11px}.doc-detail{font-size:11px}.doc-sign .sign-col{font-size:11px}.doc-meta{font-size:11px}}
+@media(max-width:630px){.shell{padding:0 14px 20px}.top-inner{padding:15px}.brand strong{font-size:14px}.top-meta .label{display:none}.top-meta{font-size:9px}.crumb{padding-top:22px}.crumb h1{font-size:25px}.side-note{display:none}.controls{padding:20px}.viewer{padding:10px;border-radius:9px}.viewer-head span{display:none}.certificate{border-width:5px;padding:4.7%}.certificate:before{inset:6px}.certificate:after{inset:10px}.doc-mark{width:38px;height:38px;font-size:23px;margin-bottom:4px}.doc-head h2{font-size:clamp(9px,3.1vw,15px)}.doc-head p{font-size:clamp(5px,1.45vw,9px)}.doc-divider{margin:6px 0}.doc-title{margin:7px 0;font-size:clamp(8px,2.3vw,13px);padding:8px 3px}.doc-meta{font-size:clamp(5px,1.3vw,8px);margin-bottom:7px}.doc-body{font-size:clamp(5px,1.4vw,8px);line-height:1.48;margin-bottom:6px}.doc-detail{font-size:clamp(5px,1.4vw,8px);margin:6px 0}.doc-detail td{padding:3px}.doc-sign .sign-col{font-size:clamp(5px,1.3vw,8px)}.doc-sign .line{height:16px}.doc-sign{padding-bottom:3px}.doc-seal{width:50px;height:50px;gap:1px}.doc-seal strong{font-size:14px}.doc-seal span{font-size:4px}.doc-foot{font-size:4px;padding-top:5px}.preview-watermark{font-size:25px}}
+@media print{
+ @page{size:A4 portrait;margin:0}
+ html,body{margin:0!important;padding:0!important;background:#fff!important}
+ .top,.crumb,.controls,.viewer-head,.audit-note,.preview-watermark{display:none!important}
+ .shell,.work,.viewer,.print-fit{display:block!important;margin:0!important;padding:0!important;max-width:none!important;box-shadow:none!important;border:0!important;grid-template-columns:none!important}
+ .certificate{margin:0!important;width:210mm!important;height:297mm!important;aspect-ratio:auto!important;padding:13mm 14mm!important;border:2.6mm solid #10283f!important;box-shadow:none!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;page-break-inside:avoid!important}
+ .certificate:before{inset:3mm}.certificate:after{inset:5mm}
+ .doc-head h2{font-size:21pt}.doc-head p{font-size:9pt}.doc-title{font-size:17pt;margin:6mm 0 6mm;padding:5mm}.doc-mark{height:17mm;width:17mm;font-size:28pt}.doc-meta{font-size:9pt;margin-bottom:5mm}.doc-body{font-size:9pt;line-height:1.58;margin-bottom:4mm}.doc-detail{font-size:9pt;margin:4mm 0 6mm}.doc-detail td{padding:3mm}.doc-sign .sign-col{font-size:9pt}.doc-seal{width:26mm;height:26mm}.doc-seal strong{font-size:23pt}.doc-seal span{font-size:6pt}.doc-foot{font-size:6pt}
+ body:not(.issued) .certificate{display:none!important}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-inner"><div class="brand"><span class="monogram">G</span><div><strong>GATHERIDE CREATIONS LLP</strong><small>CAPITAL RECORDS / CERTIFICATE DESK</small></div></div><div class="top-meta"><span class="label">PRIVATE ADMIN CONSOLE</span><span><i></i>GOOGLE SHEETS BACKED</span></div></div></header>
+<div class="shell">
+  <div class="crumb"><div><div class="eyebrow">CERTIFICATE OPERATIONS / PORTFOLIO REGISTER</div><h1>Issue with precision.</h1><p>Verify, record and print a capital contribution certificate — all in one audited workflow.</p></div><div class="side-note">Legal-corporate certificate issuance<br>GATHERIDE CREATIONS LLP · LLPIN ABZ-1191</div></div>
+  <div class="work">
+    <section class="card controls" aria-labelledby="formTitle">
+      <div class="section-tag">01 / ISSUANCE DETAILS</div>
+      <h2 id="formTitle">New certificate</h2>
+      <p>Only a verified partner can be issued a certificate. Every completed issuance is saved to the Google Sheet before printing.</p>
+      <div class="portfolio-panel"><div><span>NEXT PORTFOLIO NUMBER</span><strong id="portfolioNo">····</strong></div><small>Auto-assigned<br>from 0006</small></div>
+      <form id="issueForm" novalidate>
+        <div class="field"><label for="name">Partner's full legal name <span>Required</span></label><input id="name" name="name" maxlength="120" autocomplete="name" placeholder="Name as per approved identity record" required></div>
+        <div class="field"><label for="identity">DPIN / PAN <span>Required</span></label><input id="identity" name="identity" maxlength="10" spellcheck="false" autocapitalize="characters" autocomplete="off" placeholder="8-digit DPIN or 10-character PAN" required><small class="hint">Format check + mandatory approval against your private Verified_Partners sheet.</small></div>
+        <div class="field"><label for="issueDate">Date of issue <span>Required</span></label><input id="issueDate" name="date" type="date" required></div>
+        <div class="field"><label for="certificateNo">Certificate number <span>Required · Unique</span></label><input id="certificateNo" name="certificateNo" maxlength="24" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="GCL/CC/2026/0006" required><div id="availability" class="check" aria-live="polite"></div></div>
+        <div class="actions"><button id="issueBtn" type="submit" class="main-btn" disabled>Validate, save & generate certificate ↗</button><button id="reprintBtn" type="button" class="outline-btn" disabled>Find existing certificate to reprint</button></div>
+      </form>
+      <div id="message" class="alert hidden" role="alert" aria-live="assertive"></div>
+      <p class="audit-note">Amount is fixed at <strong>₹5,00,000</strong>. A valid-looking PAN/DPIN is not proof of official validity; only identities previously reviewed and approved in your private Google Sheet may pass the back-end gate. This form does not prove that money was received.</p>
+    </section>
+    <section class="card viewer" aria-label="Certificate preview"><div class="viewer-head"><h2>02 / Certificate document</h2><span id="viewerState">Preview · Not yet issued</span><button id="printBtn" disabled type="button">Print / Save PDF ↗</button></div>
+      <div class="print-fit"><div class="certificate" id="certificate"><div class="preview-watermark" id="watermark">NOT ISSUED</div><div class="doc-inner">
+        <div class="doc-head"><div class="doc-mark">G</div><h2>GATHERIDE CREATIONS LLP</h2><p>58/1617, Koyappathody Building, Calicut, Kozhikode,<br>Kerala – 673001, India</p><p class="llpin">LLPIN: ABZ-1191</p><div class="doc-divider"></div></div>
+        <div class="doc-title">CERTIFICATE OF<br><strong>CAPITAL CONTRIBUTION</strong></div>
+        <div class="doc-meta"><div><span>Certificate No.</span> <b id="printNo">GCL/CC/—</b></div><div><span>Portfolio No.</span> <b id="printPortfolio">0006</b></div><div><span>Date:</span> <b id="printDate">—</b></div></div>
+        <p class="doc-body">This certifies that the following person or entity is recorded as a Partner of <strong>GATHERIDE CREATIONS LLP</strong> and that the agreed capital contribution detailed below forms part of the applicable LLP Agreement and partner records.</p>
+        <table class="doc-detail"><tbody><tr><td>Name of Partner</td><td id="printName">[To be issued]</td></tr><tr><td>DPIN / PAN</td><td id="printId">—</td></tr><tr><td>Capital Contribution</td><td class="amount">₹ 5,00,000/-</td></tr><tr><td>Amount in Words</td><td>Rupees Five Lakhs Only</td></tr></tbody></table>
+        <p class="doc-body">This certificate acknowledges the <strong>agreed contribution</strong> stated in the LLP's records. It does not, by itself, confirm receipt of funds. Actual receipt must be evidenced by the books of account and supporting banking records.</p>
+        <p class="doc-body">The Partner's rights and obligations, including profit sharing, are governed by the LLP Agreement and applicable law. This is <strong>not a share certificate</strong>, a payment receipt, a transferable security, or a guarantee of investment returns.</p>
+        <div class="doc-sign"><div class="sign-col"><p><strong>For GATHERIDE CREATIONS LLP</strong></p><div class="line"></div><p><strong>Mr. Nijesh Puthalath</strong></p><p>Designated Partner · DPIN: 07722743</p><p>Place: Kozhikode</p></div><div class="doc-seal" aria-label="Decorative monogram, not an official seal"><strong>G</strong><span>COMPANY RECORD</span></div></div>
+        <div class="doc-foot">INTERNAL RECORD REFERENCE <strong id="printFingerprint">NOT ISSUED</strong> · PRINTED FROM AUTHORISED REGISTER<br>Certificate valid only after review and authorised signature; decorative monogram is not an official company seal.</div>
+      </div></div></div>
+    </section>
+  </div>
+</div>
+<script>
+(function(){
+  'use strict';
+  const el = id=>document.getElementById(id);
+  const form=el('issueForm'),msg=el('message'),issueBtn=el('issueBtn'),reprintBtn=el('reprintBtn'),printBtn=el('printBtn');
+  let savedRecord=null; let availabilityToken=0;let availabilityTimer;
+  function show(text,success){msg.textContent=text;msg.classList.remove('hidden');msg.classList.toggle('success',!!success);}
+  function clear(){msg.classList.add('hidden');msg.textContent='';}
+  function pending(text){issueBtn.disabled=true;reprintBtn.disabled=true;show(text,false);}
+  function active(){issueBtn.disabled=false;reprintBtn.disabled=false;}
+  function render(record){
+    savedRecord=record;document.body.classList.add('issued');el('watermark').classList.add('hidden');
+    el('printNo').textContent=record.certificateNo;el('printPortfolio').textContent=record.portfolio;
+    el('printDate').textContent=record.date;el('printName').textContent=record.name;
+    el('printId').textContent=record.identityType+' : '+record.identity;
+    el('printFingerprint').textContent=record.fingerprint || 'REGISTERED';
+    el('viewerState').textContent='Portfolio '+record.portfolio+' · ISSUED / SAVED';printBtn.disabled=false;
+  }
+  function resetPreview(){
+    savedRecord=null;printBtn.disabled=true;document.body.classList.remove('issued');el('watermark').classList.remove('hidden');
+    el('viewerState').textContent='Preview · Not yet issued';
+    el('printNo').textContent='GCL/CC/—';el('printName').textContent='[To be issued]';
+    el('printId').textContent='—';el('printDate').textContent='—';el('printFingerprint').textContent='NOT ISSUED';
+  }
+  function fail(err){active();show((err&&err.message)||'There was a problem; no new certificate has been confirmed. Check the register before trying again.',false);}
+  function call(name,success,...args){
+    if(!(window.google&&google.script&&google.script.run)){fail({message:'Open the deployed Google Apps Script web app, not this file directly. Follow the setup guide.'});return;}
+    google.script.run.withSuccessHandler(success).withFailureHandler(fail)[name](...args);
+  }
+  function refresh(suggest){
+    call('getDashboardState',data=>{
+      el('portfolioNo').textContent=data.nextPortfolio;
+      el('issueDate').value=el('issueDate').value || data.today;el('issueDate').max=data.today;
+      if(suggest || !el('certificateNo').value) el('certificateNo').value=data.certificateSuggestion;
+      active();clear();runAvailabilityCheck();
+    });
+  }
+  function payload(){return {
+    name:el('name').value,identity:el('identity').value,date:el('issueDate').value,certificateNo:el('certificateNo').value
+  };}
+  function runAvailabilityCheck(){
+    clearTimeout(availabilityTimer);
+    const no=el('certificateNo').value.trim();let token=++availabilityToken;
+    if(!/^GCL\/CC\/20\d{2}\/\d{4,6}$/i.test(no)){
+      el('availability').textContent='Use GCL/CC/YYYY/0006 format';el('availability').className='check bad';return;
+    }
+    el('availability').textContent='Checking unique number…';el('availability').className='check';
+    availabilityTimer=setTimeout(()=>{
+      if(!(window.google&&google.script&&google.script.run))return;
+      google.script.run.withSuccessHandler(r=>{if(token!==availabilityToken)return;
+        el('availability').textContent=r.message;el('availability').className='check '+(r.available?'good':'bad');
+      }).withFailureHandler(()=>{if(token!==availabilityToken)return;el('availability').textContent='Availability will be checked on final save.';
+      }).checkCertificateAvailability(no);
+    },350);
+  }
+  form.addEventListener('submit',e=>{
+    e.preventDefault();clear();resetPreview();
+    if(!el('name').value.trim() || !el('identity').value.trim() || !el('issueDate').value || !el('certificateNo').value.trim()){
+      show('All four fields are required.');return;
+    }
+    pending('Validating name, identity approval and unique certificate number; saving to the Google Sheet…');
+    call('issueCertificate',result=>{
+      active();if(!result || !result.ok){show('Certificate issuance was not confirmed.');return;}
+      render(result.record);el('portfolioNo').textContent=result.nextPortfolio;
+      show('Certificate '+result.record.certificateNo+' saved successfully under portfolio '+result.record.portfolio+'. You can now print or save it as PDF.',true);
+    },payload());
+  });
+  reprintBtn.addEventListener('click',()=>{
+    const no=el('certificateNo').value.trim();
+    if(!no){show('Enter the existing certificate number to reprint.');return;}
+    pending('Retrieving the issued certificate from the private register…');
+    call('findCertificate',result=>{active();render(result.record);show('Existing certificate loaded from the register. Reprint is available.',true);},no);
+  });
+  printBtn.addEventListener('click',()=>{if(savedRecord && savedRecord.status==='ISSUED')window.print();});
+  el('certificateNo').addEventListener('input',runAvailabilityCheck);
+  ['name','identity','issueDate','certificateNo'].forEach(id=>el(id).addEventListener('input',()=>{
+    if(savedRecord){resetPreview();show('Form changed. The previously generated preview was cleared. Reprint that certificate to view it again.',false);}
+  }));
+  pending('Connecting to the private Google Sheet…');
+  refresh(true);
+})();
+</script>
+</body>
+</html>
