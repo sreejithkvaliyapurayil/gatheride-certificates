@@ -3,5 +3,5 @@
 // This URL is a public identifier, not a secret; actual access is protected
 // by Apps Script's "Who has access: Only myself" deployment permission.
 window.GATHERIDE_CERTIFICATE_CONFIG = {
-  appScriptWebAppUrl: ''
+  appScriptWebAppUrl: 'https://script.google.com/macros/s/AKfycbx1okUxs3X0pbD-w61keQRa-7EazxjQhfZxvTLOvnqnlGI9HdZhaqiao3DK_7KO2h25/exec'
 };
