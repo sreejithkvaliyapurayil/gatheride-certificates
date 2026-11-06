@@ -14,7 +14,7 @@ const db = {
   Audit_Log: [headers.Audit_Log]
 };
 let lockCount=0;
-const props = {'GATHERIDE_CERTIFICATE_SHEET_ID':'test-sheet'};
+const props = {'GATHERIDE_CERTIFICATE_SHEET_ID':'test-sheet', 'GATHERIDE_AUTHORIZED_OPERATOR_EMAILS_V1':'["admin@example.invalid","second@example.invalid"]'};
 const sheet=(name)=>({
   getLastRow:()=>db[name].length,
   getRange:(row,col,count,width)=>({
@@ -36,6 +36,7 @@ const context = {
   }
 };
 vm.createContext(context);
+vm.runInContext(fs.readFileSync(path.join(__dirname,'../appsscript/OperatorAccess.gs'),'utf8'),context);
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../appsscript/Code.gs'),'utf8'),context);
 const evalIn = expression=>vm.runInContext(expression,context);
 assert.equal(evalIn('getDashboardState().nextPortfolio'),'0006');
@@ -61,4 +62,12 @@ const found=evalIn("findCertificate('GCL/CC/2026/0006')");
 assert.equal(found.record.portfolio,'0006');
 assert.equal(db.Audit_Log.length,3); // header + issue + reprint
 assert(lockCount>=4);
+// Every entry point must fail closed for an unapproved identity, including read-only endpoints.
+context.Session.getActiveUser=()=>({getEmail:()=> 'intruder@gmail.com'});
+assert.throws(()=>evalIn('getDashboardState()'), /Access denied/);
+assert.throws(()=>evalIn('checkCertificateAvailability("GCL\/CC\/2026\/0006")'), /Access denied/);
+assert.throws(()=>evalIn('findCertificate("GCL\/CC\/2026\/0006")'), /Access denied/);
+assert.throws(()=>evalIn('issueCertificate(testInput)'), /Access denied/);
+context.Session.getActiveUser=()=>({getEmail:()=> ''});
+assert.throws(()=>evalIn('getDashboardState()'), /identity unavailable/);
 console.log('PASS: issue 0006, unique portfolio increment, duplicate number, duplicate identity, unapproved ID, reprint, and lock acquisition.');

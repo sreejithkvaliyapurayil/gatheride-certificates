@@ -72,6 +72,7 @@ function ensureSheet_(ss, name, headers) {
 }
 
 function doGet() {
+  assertAuthorized_();
   return HtmlService.createHtmlOutputFromFile('Certificate')
     .setTitle('GATHERIDE | Secure Certificate Issuance')
     .addMetaTag('viewport', 'width=device-width, initial-scale=1');
@@ -90,8 +91,7 @@ function currentTimestamp_() {
   return Utilities.formatDate(new Date(), SETTINGS.TZ, 'yyyy-MM-dd HH:mm:ss');
 }
 function currentActor_() {
-  // Access must be restricted in Deploy settings; email is for audit only, not authorization.
-  return Session.getActiveUser().getEmail() || 'Authorized application user';
+  return assertAuthorized_();
 }
 function pad_(n) { return String(n).padStart(4, '0'); }
 function cleanName_(raw) {
@@ -181,6 +181,7 @@ function formatRecord_(row) {
   };
 }
 function getDashboardState() {
+  assertAuthorized_();
   const ss = spreadsheet_();
   const rows = certRows_(ss);
   const number = nextPortfolio_(rows);
@@ -195,6 +196,7 @@ function getDashboardState() {
 
 /** Advisory duplicate check; the real unique check is repeated under LockService at issuance. */
 function checkCertificateAvailability(raw) {
+  assertAuthorized_();
   const certificateNo = cleanCertificateNo_(raw);
   const exists = certRows_(spreadsheet_()).some(r => String(r[1]).trim().toUpperCase() === certificateNo);
   return {available:!exists, message:exists ? 'This certificate number is already issued. Choose another number or reprint.' : 'Certificate number is available (subject to final save check).'};
@@ -202,6 +204,7 @@ function checkCertificateAvailability(raw) {
 
 /** Atomically validates partner approval, uniqueness, sequence, and writes the register. */
 function issueCertificate(payload) {
+  assertAuthorized_();
   const input = validateDraft_(payload); // syntactic checks (not government verification)
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(30000)) throw new Error('The register is busy. Please try again in a moment.');
@@ -235,6 +238,7 @@ function issueCertificate(payload) {
 
 /** Authorized admin only; readback is useful for reprints after browser/printing failures. */
 function findCertificate(raw) {
+  assertAuthorized_();
   const certNo = cleanCertificateNo_(raw);
   const rows = certRows_(spreadsheet_());
   const found = rows.find(r => String(r[1]).trim().toUpperCase() === certNo && String(r[9]).trim().toUpperCase() === 'ISSUED');
